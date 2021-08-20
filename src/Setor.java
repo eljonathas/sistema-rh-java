@@ -1,20 +1,25 @@
+import java.util.ArrayList;
 
 public enum Setor {
-    REQUISITOS("Requisitos"),
-    MODELAGEM("Modelagem"),
-    CODIFICACAO("Codificação"),
-    TESTES("Testes"),
-    RECURSOS_HUMANOS("Recursos Humanos");
+    REQUISITOS,
+    MODELAGEM,
+    CODIFICACAO,
+    TESTES,
+    RECURSOS_HUMANOS;
 
-    private String nome;
+    ArrayList <Contrato>contratos = new ArrayList<Contrato>();
 
-    private Setor(String nome) {
-        this.nome = nome;
-    }
+    public void contratarFuncionario(Contrato contrato){
+        contratos.add(contrato);
+  }
 
-    public String getNome() {
-        return nome;
-    }
+  public void demitirFuncionario(String cpf){
+      for (Contrato contrato : contratos){
+          if (contrato.getFuncionario().getCpf() == cpf)
+          contratos.remove(contrato);
+      }
+        
+  }
 }
 
 /*

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Empresa {
   private String nome;
@@ -7,7 +8,8 @@ public class Empresa {
   private String telefone;
   private String email;
   private String dono;
-  private ArrayList<Contrato>contratos = new ArrayList<Contrato>(); 
+  private ArrayList<Setor>setores = new ArrayList<Setor>(); 
+  
 
   public Empresa(String nome, String cnpj, String endereco, String telefone, String email, String dono) {
     this.nome = nome;
@@ -16,19 +18,17 @@ public class Empresa {
     this.telefone = telefone;
     this.email = email;
     this.dono = dono;
+    Setor[] setoresCadastrados = {Setor.REQUISITOS, Setor.MODELAGEM, Setor.CODIFICACAO, Setor.TESTES, Setor.RECURSOS_HUMANOS};
+    setores.addAll(Arrays.asList(setoresCadastrados));
   }
 
-  public void contratarFuncionario(Contrato contrato){
-        contratos.add(contrato);
-  }
-
-  public void demitirFuncionario(String cpf){
-      for (Contrato contrato : contratos){
-          if (contrato.getFuncionario().getCpf() == cpf)
-          contratos.remove(contrato);
+  public void adimitirFuncionario(Contrato contrato){
+    for (Setor setor : setores){
+      if (contrato.getSetor() == setor){        
+        setor.contratarFuncionario(contrato);
       }
-        
-  }
+    }
+  } 
 
   public Funcionario consultarFuncionario(String cpfOuNome) {
       for (Contrato contrato : contratos) {
@@ -51,17 +51,16 @@ public class Empresa {
 
   public void mostrarFuncionariosPorSetor(Setor setor) {
       for (Contrato contrato : contratos) {
-          Funcionario funcionario = contrato.getFuncionario();
-          if (funcionario.getSetor() == setor) {
+          if (contrato.getSetor() == setor) {
               System.out.println(funcionario);
           }
       }
   }
   
-  public Funcionario mostrarFuncionariosPorSetor(String sexo) {
+  public void mostrarFuncionariosPorSetor(String sexo) {
       for (Contrato contrato : contratos) {
           Funcionario funcionario = contrato.getFuncionario();
-          if (funcionario.getSexo() == setor) {
+          if (funcionario.getSexo() == sexo) {
               System.out.println(funcionario);
           }
       }

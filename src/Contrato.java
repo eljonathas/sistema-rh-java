@@ -2,11 +2,11 @@ public class Contrato {
   private Funcionario funcionario;
   private int id;
   private double salario;
-  private String cargo;
+  private Cargo cargo;
   private Setor setor;
 
 
-  public Contrato(Funcionario funcionario, int id, double salario, String cargo, Setor setor) {
+  public Contrato(Funcionario funcionario, int id, double salario, Cargo cargo, Setor setor) {
     this.id = id;
     this.funcionario = funcionario;
     this.salario = salario;
@@ -51,11 +51,11 @@ public class Contrato {
     this.salario = salario;
   }
 
-  public String getCargo() {
+  public Cargo getCargo() {
     return cargo;
   }
 
-  public void setCargo(String cargo) {
+  public void setCargo(Cargo cargo) {
     this.cargo = cargo;
   }
 }

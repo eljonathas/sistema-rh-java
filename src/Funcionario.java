@@ -1,13 +1,13 @@
 public class Funcionario {
   private String nome;
   private String sobrenome;
-  private String endereco;
+  private Endereco endereco;
   private String cpf;
   private int idade;
   private String sexo;
   private String telefone;
 
-  public Funcionario(String nome, String sobrenome, String endereco, String cpf, int idade, String sexo, String telefone) {
+  public Funcionario(String nome, String sobrenome, Endereco endereco, String cpf, int idade, String sexo, String telefone) {
     this.nome = nome;
     this.sobrenome = sobrenome;
     this.endereco = endereco;
@@ -33,11 +33,11 @@ public class Funcionario {
     this.sobrenome = sobrenome;
   }
 
-  public String getEndereco() {
+  public Endereco getEndereco() {
     return endereco;
   }
 
-  public void setEndereco(String endereco) {
+  public void setEndereco(Endereco endereco) {
     this.endereco = endereco;
   }
 
@@ -75,6 +75,14 @@ public class Funcionario {
 
   @Override
   public String toString() {
-    return String.format("Nome: %s %s%nTelefone: %s%nCpf: %s%nEndereço: %s%nIdade: %s%nSexo: %s",nome,sobrenome,telefone,cpf,endereco,idade,sexo);
+    return "Funcionario{" +
+            "nome='" + nome + '\'' +
+            ", sobrenome='" + sobrenome + '\'' +
+            ", endereco=" + endereco +
+            ", cpf='" + cpf + '\'' +
+            ", idade=" + idade +
+            ", sexo='" + sexo + '\'' +
+            ", telefone='" + telefone + '\'' +
+            '}';
   }
 }

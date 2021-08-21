@@ -5,18 +5,12 @@ public class Contrato {
   private Cargo cargo;
   private Setor setor;
 
-
   public Contrato(Funcionario funcionario, int id, double salario, Cargo cargo, Setor setor) {
     this.id = id;
     this.funcionario = funcionario;
     this.salario = salario;
     this.setor = setor;
-
-    if(cargo.toLowerCase().equals("colaborador") || cargo.toLowerCase().equals("chefe")) {
-      this.cargo = cargo.toLowerCase();
-    } else {
-      throw new IllegalArgumentException("Cargo invalido");
-    }
+    this.cargo = cargo;
   }
 
   public Funcionario getFuncionario() {
@@ -57,5 +51,15 @@ public class Contrato {
 
   public void setCargo(Cargo cargo) {
     this.cargo = cargo;
+  }
+
+  @Override
+  public String toString() {
+    return "Contrato{" +
+        "funcionario=" + funcionario.getNome() +
+        ", id=" + id +
+        ", salario=" + salario +
+        ", cargo='" + cargo + '\'' +
+      '}';
   }
 }

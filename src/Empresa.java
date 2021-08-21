@@ -9,7 +9,6 @@ public class Empresa {
   private String email;
   private String dono;
   private ArrayList<Setor>setores = new ArrayList<Setor>(); 
-  
 
   public Empresa(String nome, String cnpj, String endereco, String telefone, String email, String dono) {
     this.nome = nome;
@@ -29,43 +28,58 @@ public class Empresa {
       }
     }
   } 
-
-  public Funcionario consultarFuncionario(String cpfOuNome) {
-      for (Contrato contrato : contratos) {
-          Funcionario funcionario = contrato.getFuncionario();
-          
-          if (funcionario.getNome() == cpfOuNome || funcionario.getCpf() == cpfOuNome) {
-              return funcionario;
-          }
+  public Funcionario consultarFuncionario(String cpfOuNome){
+    for (Setor setor : setores){
+      for (Contrato contrato : setor.contratos){
+        if (contrato.getFuncionario().getCpf().equals(cpfOuNome) || contrato.getFuncionario().getNome().equals(cpfOuNome)){
+          return contrato.getFuncionario();
+        }
       }
+    }
 
-      return null;
-  }
- 
-  public void mostrarTodosOsFuncionarios() {
-     for (Contrato contrato : contratos) {
-          Funcionario funcionario = contrato.getFuncionario();
-          System.out.println(funcionario);
-      }   
+    return null;
   }
 
-  public void mostrarFuncionariosPorSetor(Setor setor) {
-      for (Contrato contrato : contratos) {
-          if (contrato.getSetor() == setor) {
-              System.out.println(funcionario);
-          }
+  public void mostrarTodosOsFuncionarios(){
+    for (Setor setor : setores){
+      for (Contrato contrato : setor.contratos){
+        System.out.println(contrato.getFuncionario().toString());
       }
-  }
-  
-  public void mostrarFuncionariosPorSetor(String sexo) {
-      for (Contrato contrato : contratos) {
-          Funcionario funcionario = contrato.getFuncionario();
-          if (funcionario.getSexo() == sexo) {
-              System.out.println(funcionario);
-          }
-      }
+    }
   }
 
+  public void mostrarFuncionariosPorSetorSexoEstado(String setorNome, String sexoFuncionario, String estadoFuncionario){
+    for (Setor setor : setores){
+      if (setor.getNome() == setorNome){
+        for (Contrato contrato : setor.contratos){
+          if(contrato.getFuncionario().getSexo() == sexoFuncionario && 
+          contrato.getFuncionario().getEndereco().getEstado().getNome() == estadoFuncionario){
+            System.out.println(contrato.getFuncionario().toString());
+          }
+        }
+      }
+    }
+  }
+
+  public void listarContratos(){
+    for (Setor setor : setores){
+      for (Contrato contrato : setor.contratos){
+        System.out.println(contrato.toString());
+      }
+    }
+  }
+
+  public Contrato buscarContratoPorId(int contratoId){
+    for (Setor setor : setores){
+      for (Contrato contrato : setor.contratos){
+        if (contrato.getId() == contratoId){
+          return contrato;
+        }
+      }
+    }
+
+    return null;
+  }
 
   public String getNome() {
     return nome;

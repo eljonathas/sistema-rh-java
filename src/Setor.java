@@ -1,13 +1,22 @@
 import java.util.ArrayList;
 
 public enum Setor {
-    REQUISITOS,
-    MODELAGEM,
-    CODIFICACAO,
-    TESTES,
-    RECURSOS_HUMANOS;
+    REQUISITOS("Requisitos"),
+    MODELAGEM("Modelagem"),
+    CODIFICACAO("Codificação"),
+    TESTES("Testes"),
+    RECURSOS_HUMANOS("Recursos Humanos");
 
     ArrayList <Contrato>contratos = new ArrayList<Contrato>();
+    private String nome;
+
+    private Setor(String nome){
+        this.nome = nome;
+    }
+
+    public String getNome() {
+        return nome;
+    }
 
     public void contratarFuncionario(Contrato contrato){
         contratos.add(contrato);

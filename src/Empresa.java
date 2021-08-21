@@ -81,6 +81,38 @@ public class Empresa {
     return null;
   }
 
+  public Funcionario listarFuncionarioDeMaiorSalario(){
+    Funcionario funcionarioMaiorSalario = null;
+    double maiorSalario = 0;
+
+    for (Setor setor : setores){
+      for (Contrato contrato : setor.contratos){
+        if (contrato.getSalario() > maiorSalario){
+          maiorSalario = contrato.getSalario();
+          funcionarioMaiorSalario = contrato.getFuncionario();
+        }
+      }
+    }
+
+    return funcionarioMaiorSalario;
+  }
+
+  public Funcionario listarFuncionarioDeMenorSalario(){
+    Funcionario funcionarioMenorSalario = null;
+    double menorSalario = 0;
+
+    for (Setor setor : setores){
+      for (Contrato contrato : setor.contratos){
+        if (contrato.getSalario() < menorSalario){
+          menorSalario = contrato.getSalario();
+          funcionarioMenorSalario = contrato.getFuncionario();
+        }
+      }
+    }
+
+    return funcionarioMenorSalario;
+  }
+
   public String getNome() {
     return nome;
   }

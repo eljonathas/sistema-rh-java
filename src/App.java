@@ -73,7 +73,7 @@ public class App {
 
         System.out.println(Setor.TESTES.getNome().toLowerCase());
 
-        while (setorFuncionario != Setor.TESTES.getNome().toLowerCase()){
+        while (!setorFuncionario.equals(Setor.TESTES.getNome().toLowerCase())){
           System.out.println(setorFuncionario);
           System.out.println("Digite o setor do funcionário, escolha entre ["+Setor.TESTES.getNome()+", "+Setor.REQUISITOS.getNome()+", "+Setor.MODELAGEM.getNome()+", "+Setor.CODIFICACAO.getNome()+", "+Setor.RECURSOS_HUMANOS.getNome()+"]: ");
           setorFuncionario = (scanner.nextLine()).toLowerCase();

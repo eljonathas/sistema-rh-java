@@ -3,10 +3,10 @@ public class Endereco {
   private Cidade cidade;
   private Estado estado;
 
-  public Endereco(Bairro bairro, Cidade cidade, Estado estado) {
-    this.bairro = bairro;
-    this.cidade = cidade;
-    this.estado = estado;
+  public Endereco(String bairro, String cidade, String estado) {
+    this.bairro = new Bairro(bairro);
+    this.cidade = new Cidade(cidade);
+    this.estado = new Estado(estado);
   }
 
   public Bairro getBairro() {

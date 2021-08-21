@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-
+/*
 public enum Setor {
     REQUISITOS("Requisitos"),
     MODELAGEM("Modelagem"),
@@ -7,7 +7,7 @@ public enum Setor {
     TESTES("Testes"),
     RECURSOS_HUMANOS("Recursos Humanos");
 
-    ArrayList <Contrato>contratos = new ArrayList<Contrato>();
+    ArrayList<Contrato> contratos = new ArrayList<Contrato>();
     private String nome;
 
     private Setor(String nome){
@@ -27,7 +27,7 @@ public enum Setor {
   }
 }
 
-/*
+
 Setor[] values = Setor.values();
 
        Arrays.asList( values ).forEach(setor -> {

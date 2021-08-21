@@ -1,4 +1,33 @@
+import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
+
+enum Setor {
+  REQUISITOS("Requisitos"),
+  MODELAGEM("Modelagem"),
+  CODIFICACAO("Codificação"),
+  TESTES("Testes"),
+  RECURSOS_HUMANOS("Recursos Humanos");
+
+  ArrayList<Contrato> contratos = new ArrayList<Contrato>();
+  private String nome;
+
+  private Setor(String nome){
+    this.nome = nome;
+  }
+
+  public String getNome() {
+    return nome;
+  }
+
+  public void contratarFuncionario(Contrato contrato){
+    contratos.add(contrato);
+  }
+
+  public void demitirFuncionario(Contrato contrato){
+    contratos.remove(contrato);
+  }
+}
 
 public class App {
   public static void main(String[] args) {
@@ -17,18 +46,19 @@ public class App {
     String nomeDono = scanner.nextLine();
 
     Empresa empresa = new Empresa(nomeEmpresa, cnpj, endereco, telefone, email, nomeDono);
-
+    /*
     System.out.println("""
     Digite a opção desejada:
     1 - Admitir funcionário
     2 - Consultar funcionário por nome ou cpf
-    3 - Atualizar dados contratuais do funcionário
+    3 - Atualizar dados contratuais ou pessoais do funcionário
     4 - Demitir funcionário por cpf
     5 - Listar todos os funcionários
     6 - Listar todos os funcionários por setor, sexo e estado
     7 - Listar funcionário com maior salário
     8 - Listar funcionário com menor salário
     """);
+    */
 
     int opcao = Integer.parseInt(scanner.nextLine());
 
@@ -61,9 +91,9 @@ public class App {
         System.out.println("Digite o sexo do funcionário: ");
         String sexoFuncionario = scanner.nextLine();
 
-        String setorFuncionario = null;
+        String setorFuncionario;
 
-        String cargoFuncionario = null;
+        String cargoFuncionario;
 
         Contrato contrato = null;
 
@@ -71,18 +101,15 @@ public class App {
 
         int randomId = (int) (Math.random() * Math.pow(10, 5));
 
-        System.out.println(Setor.TESTES.getNome().toLowerCase());
-
-        while (!setorFuncionario.equals(Setor.TESTES.getNome().toLowerCase())){
-          System.out.println(setorFuncionario);
+        do {
           System.out.println("Digite o setor do funcionário, escolha entre ["+Setor.TESTES.getNome()+", "+Setor.REQUISITOS.getNome()+", "+Setor.MODELAGEM.getNome()+", "+Setor.CODIFICACAO.getNome()+", "+Setor.RECURSOS_HUMANOS.getNome()+"]: ");
           setorFuncionario = (scanner.nextLine()).toLowerCase();
-        }
+        } while (!setorFuncionario.equals(Setor.REQUISITOS.getNome().toLowerCase()) && !setorFuncionario.equals(Setor.MODELAGEM.getNome().toLowerCase()) && !setorFuncionario.equals(Setor.CODIFICACAO.getNome().toLowerCase()) && !setorFuncionario.equals(Setor.TESTES.getNome().toLowerCase()) && !setorFuncionario.equals(Setor.RECURSOS_HUMANOS.getNome().toLowerCase()));
 
         do {
           System.out.println("Digite o cargo do funcionário, escolha entre ["+Cargo.CHEFE.getCargo()+", "+Cargo.COLABORADOR.getCargo()+"]: ");
           cargoFuncionario = scanner.nextLine();
-        } while (cargoFuncionario != Cargo.CHEFE.getCargo() || cargoFuncionario != Cargo.COLABORADOR.getCargo());
+        } while (!cargoFuncionario.equals(Cargo.CHEFE.getCargo()) && !cargoFuncionario.equals(Cargo.COLABORADOR.getCargo()));
 
         System.out.println("Digite o salário do funcionário: ");
         double salarioFuncionario = scanner.nextDouble();
@@ -113,7 +140,7 @@ public class App {
           funcionario, 
           randomId, 
           salarioFuncionario, 
-          cargoFuncionario == Cargo.CHEFE.getCargo().toLowerCase() ? Cargo.CHEFE : Cargo.COLABORADOR,
+          cargoFuncionario.equals(Cargo.CHEFE.getCargo().toLowerCase()) ? Cargo.CHEFE : Cargo.COLABORADOR,
           setor 
         );
 
@@ -139,18 +166,21 @@ public class App {
         System.out.println("Digite o id do contrato desejado com base nos dados acima: ");
         int idContrato = Integer.parseInt(scanner.nextLine());
 
-        Contrato buscarContrato = empresa.buscarContratoPorId(idContrato);
+        Contrato contratoBuscado = empresa.buscarContratoPorId(idContrato);
 
-        if (buscarContrato == null) {
+        if (contratoBuscado == null) {
           System.out.println("Contrato não encontrado!");
-        }
-
+          break;
+        } else {
+        /*
         System.out.println("""
         Escolha a opção desejada:
         1 - Alterar salário
         2 - Alterar cargo
         3 - Alterar setor
+        4 - Alterar dados pessoais do funcionário
         """);
+        */
 
         int opcaoAlteracao = Integer.parseInt(scanner.nextLine());
 
@@ -158,20 +188,20 @@ public class App {
           case 1:
             System.out.println("Digite o novo salário: ");
             double novoSalario = scanner.nextDouble();
-            buscarContrato.setSalario(novoSalario);
+            contratoBuscado.setSalario(novoSalario);
             System.out.println("Salário alterado com sucesso!");
             break;
           case 2:
             System.out.println("Digite o novo cargo: ");
             String novoCargo = scanner.nextLine().toLowerCase();
-            buscarContrato.setCargo(novoCargo == Cargo.CHEFE.getCargo().toLowerCase() ? Cargo.CHEFE : Cargo.COLABORADOR);
+            contratoBuscado.setCargo(novoCargo.equals(Cargo.CHEFE.getCargo().toLowerCase()) ? Cargo.CHEFE : Cargo.COLABORADOR);
             System.out.println("Cargo alterado com sucesso!");
             break;
           case 3:
             System.out.println("Digite o novo setor: ");
             String novoSetor = scanner.nextLine().toLowerCase();
 
-            Setor novoObjetoSetor = null;
+            Setor novoObjetoSetor;
 
             switch(novoSetor) {
               case "requisitos":
@@ -193,9 +223,65 @@ public class App {
                 System.out.println("Setor inválido!");
                 break;
             }
-
-            buscarContrato.setSetor(novoObjetoSetor);
+            contratoBuscado.setSetor(novoObjetoSetor);
             break;
+
+          case 4:
+            /*
+        System.out.println("""
+        Escolha a opção desejada:
+        1 - Alterar nome
+        2 - Alterar sobrenome
+        3 - Alterar endereço
+        4 - Alterar CPF
+        5 - Alterar idade
+        6 - Alterar telefone
+        """);
+        */
+            opcaoAlteracao = Integer.parseInt(scanner.nextLine());
+            funcionario = contratoBuscado.getFuncionario();
+
+            switch(opcaoAlteracao) {
+              case 1:
+                System.out.println("Informe o novo nome:");
+                nomeFuncionario = scanner.nextLine().toUpperCase();
+                funcionario.setNome(nomeFuncionario);
+                break;
+              case 2:
+                System.out.println("Informe o novo sobrenome:");
+                sobrenomeFuncionario = scanner.nextLine().toUpperCase();
+                funcionario.setSobrenome(sobrenomeFuncionario);
+                break;
+              case 3:
+                System.out.println("Digite o nome do novo bairro do funcionário: ");
+                bairroFuncionario = scanner.nextLine();
+
+                System.out.println("Digite o nome da nova cidade do funcionário: ");
+                cidadeFuncionario = scanner.nextLine();
+
+                System.out.println("Digite o nome do novo estado do funcionário: ");
+                estadoFuncionario = scanner.nextLine();
+
+                funcionario.setEndereco(new Endereco(bairroFuncionario, cidadeFuncionario, estadoFuncionario));
+                break;
+              case 4:
+                System.out.println("Informe o novo CPF:");
+                cpfFuncionario = scanner.nextLine().toUpperCase();
+                funcionario.setCpf(cpfFuncionario);
+                break;
+              case 5:
+                System.out.println("Informe o nova idade:");
+                idadeFuncionario = Integer.parseInt(scanner.nextLine());
+                funcionario.setIdade(idadeFuncionario);
+                break;
+              case 6:
+                System.out.println("Informe o novo número de telefone:");
+                telefoneFuncionario = scanner.nextLine().toUpperCase();
+                funcionario.setTelefone(telefoneFuncionario);
+              default:
+                System.out.println("Opção inválida!");
+                break;
+            }
         }
         break;
     }

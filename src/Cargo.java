@@ -1,5 +1,5 @@
 public enum Cargo {
-    CHEFE("Chefe"), COLABORADOR("Colaborador");
+    CHEFE("chefe"), COLABORADOR("colaborador");
 
     private String cargo;
 

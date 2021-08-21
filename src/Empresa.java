@@ -28,6 +28,17 @@ public class Empresa {
       }
     }
   } 
+
+  public void procurarContratoParaDemição(String cpf) {
+    for (Setor setor : setores){
+      for (Contrato contrato : setor.contratos){
+        if (contrato.getFuncionario().getCpf().equals(cpf)){
+          setor.demitirFuncionario(contrato);
+        }
+      }
+    }
+  }
+
   public Funcionario consultarFuncionario(String cpfOuNome){
     for (Setor setor : setores){
       for (Contrato contrato : setor.contratos){
@@ -77,7 +88,6 @@ public class Empresa {
         }
       }
     }
-
     return null;
   }
 

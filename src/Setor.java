@@ -22,12 +22,8 @@ public enum Setor {
         contratos.add(contrato);
   }
 
-  public void demitirFuncionario(String cpf){
-      for (Contrato contrato : contratos){
-          if (contrato.getFuncionario().getCpf() == cpf)
-          contratos.remove(contrato);
-      }
-        
+  public void demitirFuncionario(Contrato contrato){
+          contratos.remove(contrato); 
   }
 }
 

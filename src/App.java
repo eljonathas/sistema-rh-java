@@ -5,14 +5,23 @@ public class App {
     Scanner scanner = new Scanner(System.in);
     System.out.println("Digite o nome da empresa: ");
     String nomeEmpresa = scanner.nextLine();
-    System.out.println("Digite os números do cnpj: ");
-    String cnpj = scanner.nextLine();
+
+    String cnpj = "";
+
+    while (cnpj.length() != 14) {
+      System.out.println("Digite os 14 números do cnpj: ");
+      cnpj = scanner.nextLine();
+    }
+    
     System.out.println("Digite o endereço da empresa: ");
     String endereco = scanner.nextLine();
+    
     System.out.println("Digite o telefone da empresa: ");
     String telefone = scanner.nextLine();
+
     System.out.println("Digite o email da empresa: ");
     String email = scanner.nextLine();
+
     System.out.println("Digite o nome do dono da empresa: ");
     String nomeDono = scanner.nextLine();
 
@@ -38,8 +47,9 @@ public class App {
       int opcao = Integer.parseInt(scanner.nextLine());
 
       switch (opcao) {
+        // Admitir funcionário
         case 1:
-          System.out.println("Digite o nome do funcionário: ");
+          System.out.println("Digite o primeiro nome do funcionário: ");
           String nomeFuncionario = scanner.nextLine();
 
           System.out.println("Digite o sobrenome do funcionário: ");
@@ -48,8 +58,12 @@ public class App {
           System.out.println("Digite a idade do funcionário: ");
           int idadeFuncionario = Integer.parseInt(scanner.nextLine());
 
-          System.out.println("Digite o cpf do funcionário: ");
-          String cpfFuncionario = scanner.nextLine();
+          String cpfFuncionario = "";
+
+          while (cpfFuncionario.length() != 11) {
+            System.out.println("Digite os 11 números do cpf do funcionário: ");
+            cpfFuncionario = scanner.nextLine();
+          }
 
           System.out.println("Digite o telefone do funcionário: ");
           String telefoneFuncionario = scanner.nextLine();
@@ -76,11 +90,13 @@ public class App {
 
           int randomId = (int) (Math.random() * Math.pow(10, 20));
 
+          // Matém o loop enquanto o setor escolhido não for válido
           do {
             System.out.println("Digite o setor do funcionário, escolha entre ["+Setor.TESTES.getNome()+", "+Setor.REQUISITOS.getNome()+", "+Setor.MODELAGEM.getNome()+", "+Setor.CODIFICACAO.getNome()+", "+Setor.RECURSOS_HUMANOS.getNome()+"]: ");
             setorFuncionario = (scanner.nextLine()).toLowerCase();
           } while (!setorFuncionario.equals(Setor.REQUISITOS.getNome().toLowerCase()) && !setorFuncionario.equals(Setor.MODELAGEM.getNome().toLowerCase()) && !setorFuncionario.equals(Setor.CODIFICACAO.getNome().toLowerCase()) && !setorFuncionario.equals(Setor.TESTES.getNome().toLowerCase()) && !setorFuncionario.equals(Setor.RECURSOS_HUMANOS.getNome().toLowerCase()));
 
+          // Matém o loop enquanto o cargo escolhido não for válido
           do {
             System.out.println("Digite o cargo do funcionário, escolha entre ["+Cargo.CHEFE.getCargo()+", "+Cargo.COLABORADOR.getCargo()+"]: ");
             cargoFuncionario = scanner.nextLine().toLowerCase();
@@ -123,6 +139,8 @@ public class App {
 
           System.out.println("Contrato ["+randomId+": "+funcionario.getNome()+"] criado com sucesso!");
         break;
+        
+        // Consultar funcionário por nome ou cpf
         case 2:
           System.out.println("Digite o cpf ou nome do funcionário: ");
           String cpfOuNomeFuncionarioConsulta = scanner.nextLine();
@@ -136,6 +154,8 @@ public class App {
             System.out.println("Funcionário não encontrado!");
           }
         break;
+
+        // Atualizar dados contratuais ou pessoais do funcionário
         case 3:
           System.out.println("Lista de contratos: ");
           empresa.listarContratos();
@@ -160,12 +180,14 @@ public class App {
           int opcaoAlteracao = Integer.parseInt(scanner.nextLine());
 
           switch(opcaoAlteracao) {
+            // Alterar salário
             case 1:
               System.out.println("Digite o novo salário: ");
               double novoSalario = Double.parseDouble(scanner.nextLine());
               contratoBuscado.setSalario(novoSalario);
               System.out.println("Salário alterado com sucesso!");
             break;
+            // Alterar cago
             case 2:
               String novoCargo = null;
 
@@ -177,6 +199,7 @@ public class App {
               contratoBuscado.setCargo(novoCargo.equals(Cargo.CHEFE.getCargo().toLowerCase()) ? Cargo.CHEFE : Cargo.COLABORADOR);
               System.out.println("Cargo alterado com sucesso!");
             break;
+            // Alterar setor
             case 3:
               System.out.println("Digite o novo setor: ");
               String novoSetor = scanner.nextLine().toLowerCase();
@@ -205,7 +228,7 @@ public class App {
               }
               contratoBuscado.setSetor(novoObjetoSetor);
             break;
-
+            // Alterar dados pessoais do funcionário
             case 4:
               System.out.println("""
               Escolha a opção desejada:
@@ -265,6 +288,8 @@ public class App {
           }
         }
         break;
+
+        // Excluir funcionário
         case 4:
           System.out.println("Digite o cpf do funcionário que deseja excluir: ");
           cpfFuncionario = scanner.nextLine().toUpperCase();
@@ -277,9 +302,13 @@ public class App {
             System.out.println("Funcionário não encontrado!");
           }
         break;
+
+        // Listar todos os funcionários
         case 5:
           empresa.mostrarTodosOsFuncionarios();
         break;
+
+        // Filtrar funcionários por nome, sexo e estado
         case 6:
           try {
             System.out.println("Digite o nome do setor: ");
@@ -294,16 +323,22 @@ public class App {
             System.out.println("Erro ao filtrar funcionários");
           }
         break;
+
+        // Listar funcionário de maior salário
         case 7:
           Funcionario deMaiorSalario = empresa.listarFuncionarioDeMaiorSalario();
 
           System.out.println(deMaiorSalario.toString());
         break;
+
+        // Listar funcionário de menor salário
         case 8:
           Funcionario deMenorSalario = empresa.listarFuncionarioDeMenorSalario();
 
           System.out.println(deMenorSalario.toString());
         break;
+
+        // Sair
         case 9:
           sair = true;
         break;

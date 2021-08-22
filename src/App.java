@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+import javax.swing.text.StyledEditorKit;
+
 public class App {
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
@@ -15,7 +17,7 @@ public class App {
     
     System.out.println("Digite o endereço da empresa: ");
     String endereco = scanner.nextLine();
-    
+
     System.out.println("Digite o telefone da empresa: ");
     String telefone = scanner.nextLine();
 
@@ -96,19 +98,6 @@ public class App {
             setorFuncionario = (scanner.nextLine()).toLowerCase();
           } while (!setorFuncionario.equals(Setor.REQUISITOS.getNome().toLowerCase()) && !setorFuncionario.equals(Setor.MODELAGEM.getNome().toLowerCase()) && !setorFuncionario.equals(Setor.CODIFICACAO.getNome().toLowerCase()) && !setorFuncionario.equals(Setor.TESTES.getNome().toLowerCase()) && !setorFuncionario.equals(Setor.RECURSOS_HUMANOS.getNome().toLowerCase()));
 
-          // Matém o loop enquanto o cargo escolhido não for válido
-          do {
-            System.out.println("Digite o cargo do funcionário, escolha entre ["+Cargo.CHEFE.getCargo()+", "+Cargo.COLABORADOR.getCargo()+"]: ");
-            cargoFuncionario = scanner.nextLine().toLowerCase();
-          } while (!cargoFuncionario.equals(Cargo.CHEFE.getCargo().toLowerCase()) && !cargoFuncionario.equals(Cargo.COLABORADOR.getCargo().toLowerCase()));
-
-          System.out.println("Digite o salário do funcionário: ");
-          double salarioFuncionario = Double.parseDouble(scanner.nextLine());
-
-          Endereco enderecoFuncionario = new Endereco(bairroFuncionario, cidadeFuncionario, estadoFuncionario);
-
-          Funcionario funcionario = new Funcionario(nomeFuncionario, sobrenomeFuncionario, enderecoFuncionario, cpfFuncionario, idadeFuncionario, sexoFuncionario, telefoneFuncionario);
-
           switch(setorFuncionario) {
             case "requisitos":
               setor = Setor.REQUISITOS;
@@ -126,6 +115,30 @@ public class App {
               setor = Setor.RECURSOS_HUMANOS;
               break;
           }
+
+          if(setor.getChefe() != null) {
+            System.out.println("O setor escolhido já possui um chefe. Você pode atribuir o cargo para este funcionário para efetuar a troca.");
+          }
+
+          do { 
+            System.out.println("Digite o cargo do funcionário, escolha entre ["+Cargo.CHEFE.getCargo()+", "+Cargo.COLABORADOR.getCargo()+"]: ");
+            cargoFuncionario = scanner.nextLine().toLowerCase();
+
+            if(setor.getChefe() != null && cargoFuncionario.equals(Cargo.CHEFE.getCargo().toLowerCase())) {
+              String nomeDoChefeAnterior = setor.getChefe().getFuncionario().getNome();
+
+              setor.getChefe().setCargo(Cargo.COLABORADOR);
+
+              System.out.println("Cargo de chefe do setor escolhido alterado ["+nomeDoChefeAnterior+"->"+nomeFuncionario+"]");
+            }
+          } while (!cargoFuncionario.equals(Cargo.CHEFE.getCargo().toLowerCase()) && !cargoFuncionario.equals(Cargo.COLABORADOR.getCargo().toLowerCase()));   
+
+          System.out.println("Digite o salário do funcionário: ");
+          double salarioFuncionario = Double.parseDouble(scanner.nextLine());
+
+          Endereco enderecoFuncionario = new Endereco(bairroFuncionario, cidadeFuncionario, estadoFuncionario);
+
+          Funcionario funcionario = new Funcionario(nomeFuncionario, sobrenomeFuncionario, enderecoFuncionario, cpfFuncionario, idadeFuncionario, sexoFuncionario, telefoneFuncionario);
 
           contrato = new Contrato(
             funcionario, 
@@ -266,9 +279,14 @@ public class App {
                   funcionario.setEndereco(new Endereco(bairroFuncionario, cidadeFuncionario, estadoFuncionario));
                 break;
                 case 4:
-                  System.out.println("Informe o novo CPF:");
-                  cpfFuncionario = scanner.nextLine().toUpperCase();
-                  funcionario.setCpf(cpfFuncionario);
+                  String novoCpf = "";
+
+                  while (cnpj.length() != 11) {
+                    System.out.println("Digite os 11 números do cpf para alterar: ");
+                    novoCpf = scanner.nextLine();
+                  }
+
+                  funcionario.setCpf(novoCpf);
                 break;
                 case 5:
                   System.out.println("Informe o nova idade:");

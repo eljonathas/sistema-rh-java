@@ -122,7 +122,7 @@ public class Empresa {
 
     return funcionarioMenorSalario;
   }
-
+  
   public String getNome() {
     return nome;
   }

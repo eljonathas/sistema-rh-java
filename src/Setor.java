@@ -17,6 +17,16 @@ enum Setor {
     public String getNome() {
       return nome;
     }
+
+    public Contrato getChefe(){
+      for(Contrato contrato : contratos){
+        if(contrato.getCargo().getCargo().equals(Cargo.CHEFE.getCargo())){
+          return contrato;
+        }
+      }
+
+      return null;
+    }
   
     public void contratarFuncionario(Contrato contrato){
       contratos.add(contrato);

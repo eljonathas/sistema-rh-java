@@ -55,11 +55,11 @@ public class Contrato {
 
   @Override
   public String toString() {
-    return "Contrato{" +
+    return "Contrato{\n" +
         "funcionario=" + funcionario.getNome() +
-        ", id=" + id +
-        ", salario=" + salario +
-        ", cargo='" + cargo + '\'' +
+        "\n, id=" + id +
+        "\n, salario=" + salario +
+        "\n, cargo='" + cargo + '\'' +
       '}';
   }
 }

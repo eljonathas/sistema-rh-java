@@ -42,7 +42,7 @@ public class Empresa {
   public Funcionario consultarFuncionario(String cpfOuNome){
     for (Setor setor : setores){
       for (Contrato contrato : setor.contratos){
-        if (contrato.getFuncionario().getCpf().equals(cpfOuNome) || contrato.getFuncionario().getNome().equals(cpfOuNome)){
+        if (contrato.getFuncionario().getCpf().equals(cpfOuNome) || contrato.getFuncionario().getNome().toLowerCase().equals(cpfOuNome.toLowerCase())){
           return contrato.getFuncionario();
         }
       }
@@ -61,10 +61,10 @@ public class Empresa {
 
   public void mostrarFuncionariosPorSetorSexoEstado(String setorNome, String sexoFuncionario, String estadoFuncionario){
     for (Setor setor : setores){
-      if (setor.getNome() == setorNome){
+      if (setorNome.toLowerCase().equals(setor.getNome().toLowerCase())){
         for (Contrato contrato : setor.contratos){
-          if(contrato.getFuncionario().getSexo() == sexoFuncionario && 
-          contrato.getFuncionario().getEndereco().getEstado().getNome() == estadoFuncionario){
+          if(sexoFuncionario.toLowerCase().equals(contrato.getFuncionario().getSexo().toLowerCase()) && 
+          estadoFuncionario.toLowerCase().equals(contrato.getFuncionario().getEndereco().getEstado().getNome().toLowerCase())){
             System.out.println(contrato.getFuncionario().toString());
           }
         }

@@ -75,14 +75,14 @@ public class Funcionario {
 
   @Override
   public String toString() {
-    return "Funcionario{" +
-            "nome='" + nome + '\'' +
-            ", sobrenome='" + sobrenome + '\'' +
-            ", endereco=" + endereco +
-            ", cpf='" + cpf + '\'' +
-            ", idade=" + idade +
-            ", sexo='" + sexo + '\'' +
-            ", telefone='" + telefone + '\'' +
-            '}';
+    return "Funcionario{\n" +
+    "nome=" + nome + '\n' +
+    ", sobrenome=" + sobrenome + '\n' +
+    ", endereco=" + endereco.toString() +
+    ", cpf=" + cpf + '\n' +
+    ", idade=" + idade +
+    ", sexo=" + sexo + '\n' +
+    ", telefone=" + telefone + '\n' +
+    '}';
   }
 }

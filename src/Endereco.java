@@ -36,9 +36,9 @@ public class Endereco {
   @Override
   public String toString() {
     return "Endereco{" +
-        "bairro=" + bairro +
-        ", cidade=" + cidade +
-        ", estado=" + estado +
+        "bairro=" + bairro.getNome() +
+        ", cidade=" + cidade.getNome() +
+        ", estado=" + estado.getNome() +
         '}';
   }
 }

@@ -175,7 +175,6 @@ public class App {
               } while (!novoCargo.equals(Cargo.CHEFE.getCargo().toLowerCase()) && !novoCargo.equals(Cargo.COLABORADOR.getCargo().toLowerCase()));
 
               contratoBuscado.setCargo(novoCargo.equals(Cargo.CHEFE.getCargo().toLowerCase()) ? Cargo.CHEFE : Cargo.COLABORADOR);
-              
               System.out.println("Cargo alterado com sucesso!");
             break;
             case 3:
@@ -310,5 +309,8 @@ public class App {
         break;
       }
     }
+    
+    scanner.close();
+    System.out.println("Fim do programa!");
   }
 }

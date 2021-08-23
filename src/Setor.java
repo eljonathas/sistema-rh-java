@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 enum Setor {
     REQUISITOS("Requisitos"),
     MODELAGEM("Modelagem"),

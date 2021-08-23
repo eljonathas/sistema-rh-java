@@ -1,11 +1,11 @@
 public class Contrato {
   private Funcionario funcionario;
-  private int id;
+  private String id;
   private double salario;
   private Cargo cargo;
   private Setor setor;
 
-  public Contrato(Funcionario funcionario, int id, double salario, Cargo cargo, Setor setor) {
+  public Contrato(Funcionario funcionario, String id, double salario, Cargo cargo, Setor setor) {
     this.id = id;
     this.funcionario = funcionario;
     this.salario = salario;
@@ -29,11 +29,11 @@ public class Contrato {
     this.setor = setor;
   }
 
-  public int getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(String id) {
     this.id = id;
   }
 

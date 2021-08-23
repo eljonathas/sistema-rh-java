@@ -1,6 +1,5 @@
 import java.util.Scanner;
-
-import javax.swing.text.StyledEditorKit;
+import java.util.UUID;
 
 public class App {
   public static void main(String[] args) {
@@ -15,8 +14,14 @@ public class App {
       cnpj = scanner.nextLine();
     }
     
-    System.out.println("Digite o endereço da empresa: ");
-    String endereco = scanner.nextLine();
+    System.out.println("Digite o cidade onde a empresa está localizada: ");
+    String cidadeEmpresa = scanner.nextLine();
+
+    System.out.println("Digite o bairro onde a empresa está localizada: ");
+    String bairroEmpresa = scanner.nextLine();
+
+    System.out.println("Digite o estado onde a empresa está localizada: ");
+    String estadoEmpresa = scanner.nextLine();
 
     System.out.println("Digite o telefone da empresa: ");
     String telefone = scanner.nextLine();
@@ -27,7 +32,14 @@ public class App {
     System.out.println("Digite o nome do dono da empresa: ");
     String nomeDono = scanner.nextLine();
 
-    Empresa empresa = new Empresa(nomeEmpresa, cnpj, endereco, telefone, email, nomeDono);
+    Empresa empresa = new Empresa(
+      nomeEmpresa, 
+      cnpj, 
+      new Endereco(bairroEmpresa, cidadeEmpresa, estadoEmpresa), 
+      telefone, 
+      email, 
+      nomeDono
+    );
 
     boolean sair = false;
 
@@ -78,9 +90,17 @@ public class App {
 
           System.out.println("Digite o estado do funcionário: ");
           String estadoFuncionario = scanner.nextLine();
+
+          String sexoFuncionario = "";
           
-          System.out.println("Digite o sexo do funcionário: ");
-          String sexoFuncionario = scanner.nextLine();
+          while ( !(sexoFuncionario.equals("M") || sexoFuncionario.equals("F")) ) {
+            System.out.println("Digite M (Masculino) ou F (Feminino) para o sexo do funcionário: ");
+            sexoFuncionario = scanner.nextLine().toUpperCase();
+
+            if (!(sexoFuncionario.equals("M") || sexoFuncionario.equals("F"))) {
+              System.out.println("Opção inválida!");
+            }
+          }
 
           String setorFuncionario = null;
 
@@ -90,7 +110,7 @@ public class App {
 
           Setor setor = null;
 
-          int randomId = (int) (Math.random() * Math.pow(10, 20));
+          String uniqueID = UUID.randomUUID().toString();
 
           // Matém o loop enquanto o setor escolhido não for válido
           do {
@@ -136,13 +156,20 @@ public class App {
           System.out.println("Digite o salário do funcionário: ");
           double salarioFuncionario = Double.parseDouble(scanner.nextLine());
 
-          Endereco enderecoFuncionario = new Endereco(bairroFuncionario, cidadeFuncionario, estadoFuncionario);
-
-          Funcionario funcionario = new Funcionario(nomeFuncionario, sobrenomeFuncionario, enderecoFuncionario, cpfFuncionario, idadeFuncionario, sexoFuncionario, telefoneFuncionario);
+          // Cria o funcionário
+          Funcionario funcionario = new Funcionario(
+            nomeFuncionario, 
+            sobrenomeFuncionario, 
+            new Endereco(bairroFuncionario, cidadeFuncionario, estadoFuncionario), 
+            cpfFuncionario,
+            idadeFuncionario,
+            sexoFuncionario.equals("M") ? "Masculino" : "Feminino",
+            telefoneFuncionario
+          );
 
           contrato = new Contrato(
             funcionario, 
-            randomId, 
+            uniqueID, 
             salarioFuncionario, 
             cargoFuncionario.equals(Cargo.CHEFE.getCargo().toLowerCase()) ? Cargo.CHEFE : Cargo.COLABORADOR,
             setor 
@@ -150,7 +177,7 @@ public class App {
 
           empresa.adimitirFuncionario(contrato);
 
-          System.out.println("Contrato ["+randomId+": "+funcionario.getNome()+"] criado com sucesso!");
+          System.out.println("Contrato ["+uniqueID+": "+funcionario.getNome()+"] criado com sucesso!");
         break;
         
         // Consultar funcionário por nome ou cpf
@@ -172,8 +199,9 @@ public class App {
         case 3:
           System.out.println("Lista de contratos: ");
           empresa.listarContratos();
+
           System.out.println("Digite o id do contrato desejado com base nos dados acima: ");
-          int idContrato = Integer.parseInt(scanner.nextLine());
+          String idContrato = scanner.nextLine();
 
           Contrato contratoBuscado = empresa.buscarContratoPorId(idContrato);
 
@@ -204,12 +232,21 @@ public class App {
             case 2:
               String novoCargo = null;
 
-              do {
-                System.out.println("Digite o novo cargo, escolha entre ["+Cargo.CHEFE.getCargo()+", "+Cargo.COLABORADOR.getCargo()+"]: ");
+              do { 
+                System.out.println("Digite o novo cargo do funcionário, escolha entre ["+Cargo.CHEFE.getCargo()+", "+Cargo.COLABORADOR.getCargo()+"]: ");
                 novoCargo = scanner.nextLine().toLowerCase();
+    
+                if(contratoBuscado.getSetor().getChefe() != null && novoCargo.equals(Cargo.CHEFE.getCargo().toLowerCase())) {
+                  String nomeDoChefeAnterior = contratoBuscado.getSetor().getChefe().getFuncionario().getNome();
+    
+                  contratoBuscado.getSetor().getChefe().setCargo(Cargo.COLABORADOR);
+    
+                  System.out.println("Chefe do setor alterado ["+nomeDoChefeAnterior+"->"+contratoBuscado.getFuncionario().getNome()+"]");
+                }
               } while (!novoCargo.equals(Cargo.CHEFE.getCargo().toLowerCase()) && !novoCargo.equals(Cargo.COLABORADOR.getCargo().toLowerCase()));
 
               contratoBuscado.setCargo(novoCargo.equals(Cargo.CHEFE.getCargo().toLowerCase()) ? Cargo.CHEFE : Cargo.COLABORADOR);
+              
               System.out.println("Cargo alterado com sucesso!");
             break;
             // Alterar setor

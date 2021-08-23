@@ -3,7 +3,7 @@ import java.util.ArrayList;
 enum Setor {
     REQUISITOS("Requisitos"),
     MODELAGEM("Modelagem"),
-    CODIFICACAO("Codificação"),
+    CODIFICACAO("Codificacao"),
     TESTES("Testes"),
     RECURSOS_HUMANOS("Recursos Humanos");
   

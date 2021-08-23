@@ -4,13 +4,13 @@ import java.util.Arrays;
 public class Empresa {
   private String nome;
   private String cnpj;
-  private String endereco;
+  private Endereco endereco;
   private String telefone;
   private String email;
   private String dono;
   private ArrayList<Setor>setores = new ArrayList<Setor>(); 
 
-  public Empresa(String nome, String cnpj, String endereco, String telefone, String email, String dono) {
+  public Empresa(String nome, String cnpj, Endereco endereco, String telefone, String email, String dono) {
     this.nome = nome;
     this.cnpj = cnpj;
     this.endereco = endereco;
@@ -80,10 +80,10 @@ public class Empresa {
     }
   }
 
-  public Contrato buscarContratoPorId(int contratoId){
+  public Contrato buscarContratoPorId(String contratoId){
     for (Setor setor : setores){
       for (Contrato contrato : setor.contratos){
-        if (contrato.getId() == contratoId){
+        if (contrato.getId().equals(contratoId)){
           return contrato;
         }
       }
@@ -139,11 +139,11 @@ public class Empresa {
     this.cnpj = cnpj;
   }
 
-  public String getEndereco() {
+  public Endereco getEndereco() {
     return endereco;
   }
 
-  public void setEndereco(String endereco) {
+  public void setEndereco(Endereco endereco) {
     this.endereco = endereco;
   }
 
@@ -176,7 +176,7 @@ public class Empresa {
     return "Empresa{" +
         "nome='" + nome + '\'' +
         ", cnpj='" + cnpj + '\'' +
-        ", endereco='" + endereco + '\'' +
+        ", endereco='" + endereco.toString() + '\'' +
         ", telefone='" + telefone + '\'' +
         ", email='" + email + '\'' +
         ", dono='" + dono + '\'' +

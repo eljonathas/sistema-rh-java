@@ -35,10 +35,10 @@ public class Endereco {
 
   @Override
   public String toString() {
-    return "Endereco{" +
-        "bairro=" + bairro.getNome() +
-        ", cidade=" + cidade.getNome() +
-        ", estado=" + estado.getNome() +
-        '}';
+    return "Endereco {" +
+        "bairro: '" + bairro.getNome() + '\'' +
+        "cidade: '" + cidade.getNome() + '\'' +
+        "estado: '" + estado.getNome() + '\'' +
+      '}';
   }
 }

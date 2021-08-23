@@ -18,7 +18,7 @@ public class Funcionario {
   }
 
   public String getNome() {
-    return nome;
+    return nome+" "+sobrenome;
   }
 
   public void setNome(String nome) {
@@ -75,14 +75,14 @@ public class Funcionario {
 
   @Override
   public String toString() {
-    return "Funcionario{\n" +
-    "nome=" + nome + '\n' +
-    ", sobrenome=" + sobrenome + '\n' +
-    ", endereco=" + endereco.toString() +
-    ", cpf=" + cpf + '\n' +
-    ", idade=" + idade +
-    ", sexo=" + sexo + '\n' +
-    ", telefone=" + telefone + '\n' +
-    '}';
+    return "Funcionario {" +
+        "nome: '" + nome + '\'' +
+        "sobrenome: '" + sobrenome + '\'' +
+        "endereco: " + endereco.toString() +
+        "cpf: '" + cpf + '\'' +
+        "idade: " + idade +
+        "sexo: '" + sexo + '\'' +
+        "telefone: '" + telefone + '\'' +
+      '}';
   }
 }

@@ -54,7 +54,8 @@ public class App {
       6 - Listar todos os funcionários por setor, sexo e estado
       7 - Listar funcionário com maior salário
       8 - Listar funcionário com menor salário
-      9 - Sair
+      9 - Imprimir folha de pagamento
+      10 - Sair
       """);
 
       // Caso a opção seja inválida, o programa pede para digitar novamente
@@ -189,7 +190,7 @@ public class App {
 
           if (funcionarioConsulta != null) {
             System.out.println("Funcionário encontrado: ");
-            System.out.println(funcionarioConsulta);
+            System.out.println(funcionarioConsulta.toString());
           } else {
             System.out.println("Funcionário não encontrado!");
           }
@@ -393,8 +394,13 @@ public class App {
           System.out.println(deMenorSalario.toString());
         break;
 
-        // Sair
+        // Imprimir folha de pagamento
         case 9:
+          System.out.println(empresa.listarFolhaDePagamento());
+        break;
+
+        // Sair
+        case 10:
           sair = true;
         break;
       }

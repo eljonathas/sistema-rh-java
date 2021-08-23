@@ -66,8 +66,12 @@ public class Empresa {
           if(sexoFuncionario.toLowerCase().equals(contrato.getFuncionario().getSexo().toLowerCase()) && 
           estadoFuncionario.toLowerCase().equals(contrato.getFuncionario().getEndereco().getEstado().getNome().toLowerCase())){
             System.out.println(contrato.getFuncionario().toString());
+          }else{
+            System.out.println("Não encontrado");
           }
         }
+      } else {
+        System.out.println("Setor não encontrado");
       }
     }
   }
@@ -122,6 +126,20 @@ public class Empresa {
 
     return funcionarioMenorSalario;
   }
+
+  public String listarFolhaDePagamento(){
+    String folhaDePagamento = "";
+    double salarioTotal = 0.00;
+
+    for (Setor setor : setores){
+      for (Contrato contrato : setor.contratos){
+        folhaDePagamento += "Setor: " + setor.getNome() + " | " + "Funcionario: " + contrato.getFuncionario().getNome() + " | " + "Salario: R$ " + contrato.getSalario() + " | " + "Cargo: " + contrato.getCargo().getCargo() + "\n";
+        salarioTotal += contrato.getSalario();
+      }
+    }
+
+    return folhaDePagamento+"Total de custos de pagamento dos funcionários: R$ " + salarioTotal;
+  }
   
   public String getNome() {
     return nome;
@@ -174,12 +192,12 @@ public class Empresa {
   @Override
   public String toString() {
     return "Empresa{" +
-        "nome='" + nome + '\'' +
-        ", cnpj='" + cnpj + '\'' +
-        ", endereco='" + endereco.toString() + '\'' +
-        ", telefone='" + telefone + '\'' +
-        ", email='" + email + '\'' +
-        ", dono='" + dono + '\'' +
+        "nome: '" + nome + '\'' +
+        "cnpj: '" + cnpj + '\'' +
+        "endereco: '" + endereco.toString() + '\'' +
+        "telefone: '" + telefone + '\'' +
+        "email: '" + email + '\'' +
+        "dono: '" + dono + '\'' +
         '}';
   }
 }

@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Empresa {
   private String nome;
@@ -8,7 +7,8 @@ public class Empresa {
   private String telefone;
   private String email;
   private String dono;
-  private ArrayList<Setor>setores = new ArrayList<Setor>(); 
+  
+  ArrayList<Contrato> contratos = new ArrayList<Contrato>();
 
   public Empresa(String nome, String cnpj, Endereco endereco, String telefone, String email, String dono) {
     this.nome = nome;
@@ -17,34 +17,33 @@ public class Empresa {
     this.telefone = telefone;
     this.email = email;
     this.dono = dono;
-    Setor[] setoresCadastrados = {Setor.REQUISITOS, Setor.MODELAGEM, Setor.CODIFICACAO, Setor.TESTES, Setor.RECURSOS_HUMANOS};
-    setores.addAll(Arrays.asList(setoresCadastrados));
   }
 
   public void adimitirFuncionario(Contrato contrato){
-    for (Setor setor : setores){
-      if (contrato.getSetor() == setor){        
-        setor.contratarFuncionario(contrato);
+    for (Contrato c : contratos) {
+      if (c.getFuncionario().getNome().equals(contrato.getFuncionario().getNome())) {
+        return;
       }
     }
+
+    contratos.add(contrato);
   } 
 
   public void procurarContratoParaDemissão(String cpf) {
-    for (Setor setor : setores){
-      for (Contrato contrato : setor.contratos){
-        if (contrato.getFuncionario().getCpf().equals(cpf)){
-          setor.demitirFuncionario(contrato);
-        }
+    for (Contrato c : contratos) {
+      if (c.getFuncionario().getCpf().equals(cpf)) {
+        contratos.remove(c);
+        return;
       }
     }
+
+    System.out.println("Não foi encontrado nenhum contrato para a demissão do funcionário com CPF: " + cpf);
   }
 
   public Funcionario consultarFuncionario(String cpfOuNome){
-    for (Setor setor : setores){
-      for (Contrato contrato : setor.contratos){
-        if (contrato.getFuncionario().getCpf().equals(cpfOuNome) || contrato.getFuncionario().getNome().toLowerCase().equals(cpfOuNome.toLowerCase())){
-          return contrato.getFuncionario();
-        }
+    for (Contrato c : contratos) {
+      if (c.getFuncionario().getCpf().equals(cpfOuNome) || c.getFuncionario().getNome().equals(cpfOuNome)) {
+        return c.getFuncionario();
       }
     }
 
@@ -52,46 +51,38 @@ public class Empresa {
   }
 
   public void mostrarTodosOsFuncionarios(){
-    for (Setor setor : setores){
-      for (Contrato contrato : setor.contratos){
-        System.out.println(contrato.getFuncionario().toString());
-      }
+    for (Contrato c : contratos) {
+      System.out.println(c.getFuncionario().toString());
     }
   }
 
   public void mostrarFuncionariosPorSetorSexoEstado(String setorNome, String sexoFuncionario, String estadoFuncionario){
-    for (Setor setor : setores){
-      if (setorNome.toLowerCase().equals(setor.getNome().toLowerCase())){
-        for (Contrato contrato : setor.contratos){
-          if(sexoFuncionario.toLowerCase().equals(contrato.getFuncionario().getSexo().toLowerCase()) && 
-          estadoFuncionario.toLowerCase().equals(contrato.getFuncionario().getEndereco().getEstado().getNome().toLowerCase())){
-            System.out.println(contrato.getFuncionario().toString());
-          }else{
-            System.out.println("Não encontrado");
-          }
+    for (Contrato c : contratos) {
+      if (c.getSetor().getNome().equals(setorNome)){
+        if (c.getFuncionario().getSexo().equals(sexoFuncionario) && c.getFuncionario().getEndereco().getEstado().getNome().equals(estadoFuncionario)){
+          System.out.println(c.getFuncionario().toString());
         }
-      } else {
+      }else{
         System.out.println("Setor não encontrado");
       }
     }
+
+    System.out.println("Nenhum funcionário encontrado");
   }
 
   public void listarContratos(){
-    for (Setor setor : setores){
-      for (Contrato contrato : setor.contratos){
-        System.out.println(contrato.toString());
-      }
+    for (Contrato c : contratos) {
+      System.out.println(c.toString());
     }
   }
 
   public Contrato buscarContratoPorId(String contratoId){
-    for (Setor setor : setores){
-      for (Contrato contrato : setor.contratos){
-        if (contrato.getId().equals(contratoId)){
-          return contrato;
-        }
+    for (Contrato c : contratos) {
+      if (c.getId().equals(contratoId)) {
+        return c;
       }
     }
+
     return null;
   }
 
@@ -99,12 +90,10 @@ public class Empresa {
     Funcionario funcionarioMaiorSalario = null;
     double maiorSalario = 0;
 
-    for (Setor setor : setores){
-      for (Contrato contrato : setor.contratos){
-        if (contrato.getSalario() > maiorSalario){
-          maiorSalario = contrato.getSalario();
-          funcionarioMaiorSalario = contrato.getFuncionario();
-        }
+    for (Contrato c : contratos) {
+      if (c.getSalario() > maiorSalario) {
+        maiorSalario = c.getSalario();
+        funcionarioMaiorSalario = c.getFuncionario();
       }
     }
 
@@ -115,12 +104,10 @@ public class Empresa {
     Funcionario funcionarioMenorSalario = null;
     double menorSalario = 0;
 
-    for (Setor setor : setores){
-      for (Contrato contrato : setor.contratos){
-        if (contrato.getSalario() < menorSalario){
-          menorSalario = contrato.getSalario();
-          funcionarioMenorSalario = contrato.getFuncionario();
-        }
+    for (Contrato c : contratos) {
+      if (c.getSalario() < menorSalario) {
+        menorSalario = c.getSalario();
+        funcionarioMenorSalario = c.getFuncionario();
       }
     }
 
@@ -131,14 +118,24 @@ public class Empresa {
     String folhaDePagamento = "";
     double salarioTotal = 0.00;
 
-    for (Setor setor : setores){
-      for (Contrato contrato : setor.contratos){
-        folhaDePagamento += "Setor: " + setor.getNome() + " | " + "Funcionario: " + contrato.getFuncionario().getNome() + " | " + "Salario: R$ " + contrato.getSalario() + " | " + "Cargo: " + contrato.getCargo().getCargo() + "\n";
-        salarioTotal += contrato.getSalario();
-      }
+    for (Contrato c : contratos){
+      folhaDePagamento += "Setor: " + c.getSetor().getNome() + " | " + "Funcionario: " + c.getFuncionario().getNome() + " | " + "Salario: R$ " + c.getSalario() + " | " + "Cargo: " + c.getCargo().getCargo() + "\n";
+      salarioTotal += c.getSalario();
     }
 
     return folhaDePagamento+"Total de custos de pagamento dos funcionários: R$ " + salarioTotal;
+  }
+
+  public Contrato listarChefeDoSetor(Setor setor){
+    for (Contrato c : contratos) {
+      if (c.getSetor().equals(setor)){
+        if(c.getCargo().getCargo().equals(Cargo.CHEFE)){
+          return c;
+        }
+      }
+    }
+
+    return null;
   }
   
   public String getNome() {

@@ -137,7 +137,7 @@ public class App {
               break;
           }
 
-          if(setor.getChefe() != null) {
+          if(empresa.listarChefeDoSetor(setor) != null) {
             System.out.println("O setor escolhido já possui um chefe. Você pode atribuir o cargo para este funcionário para efetuar a troca.");
           }
 
@@ -145,10 +145,10 @@ public class App {
             System.out.println("Digite o cargo do funcionário, escolha entre ["+Cargo.CHEFE.getCargo()+", "+Cargo.COLABORADOR.getCargo()+"]: ");
             cargoFuncionario = scanner.nextLine().toLowerCase();
 
-            if(setor.getChefe() != null && cargoFuncionario.equals(Cargo.CHEFE.getCargo().toLowerCase())) {
-              String nomeDoChefeAnterior = setor.getChefe().getFuncionario().getNome();
+            if(empresa.listarChefeDoSetor(setor) != null && cargoFuncionario.equals(Cargo.CHEFE.getCargo().toLowerCase())) {
+              String nomeDoChefeAnterior = empresa.listarChefeDoSetor(setor).getFuncionario().getNome();
 
-              setor.getChefe().setCargo(Cargo.COLABORADOR);
+              empresa.listarChefeDoSetor(setor).setCargo(Cargo.COLABORADOR);
 
               System.out.println("Cargo de chefe do setor escolhido alterado ["+nomeDoChefeAnterior+"->"+nomeFuncionario+"]");
             }
@@ -237,10 +237,10 @@ public class App {
                 System.out.println("Digite o novo cargo do funcionário, escolha entre ["+Cargo.CHEFE.getCargo()+", "+Cargo.COLABORADOR.getCargo()+"]: ");
                 novoCargo = scanner.nextLine().toLowerCase();
     
-                if(contratoBuscado.getSetor().getChefe() != null && novoCargo.equals(Cargo.CHEFE.getCargo().toLowerCase())) {
-                  String nomeDoChefeAnterior = contratoBuscado.getSetor().getChefe().getFuncionario().getNome();
+                if(empresa.listarChefeDoSetor(contratoBuscado.getSetor()) != null && novoCargo.equals(Cargo.CHEFE.getCargo().toLowerCase())) {
+                  String nomeDoChefeAnterior = empresa.listarChefeDoSetor(contratoBuscado.getSetor()).getFuncionario().getNome();
     
-                  contratoBuscado.getSetor().getChefe().setCargo(Cargo.COLABORADOR);
+                  empresa.listarChefeDoSetor(contratoBuscado.getSetor()).setCargo(Cargo.COLABORADOR);
     
                   System.out.println("Chefe do setor alterado ["+nomeDoChefeAnterior+"->"+contratoBuscado.getFuncionario().getNome()+"]");
                 }
@@ -252,7 +252,8 @@ public class App {
             break;
             // Alterar setor
             case 3:
-              System.out.println("Digite o novo setor: ");
+            
+              System.out.println("Digite o novo setor ["+Setor.TESTES.getNome()+", "+Setor.REQUISITOS.getNome()+", "+Setor.MODELAGEM.getNome()+", "+Setor.CODIFICACAO.getNome()+", "+Setor.RECURSOS_HUMANOS.getNome()+"]: ");
               String novoSetor = scanner.nextLine().toLowerCase();
 
               Setor novoObjetoSetor = null;
@@ -277,7 +278,9 @@ public class App {
                   System.out.println("Setor inválido!");
                 break;
               }
+
               contratoBuscado.setSetor(novoObjetoSetor);
+              System.out.println("Setor alterado com sucesso!");
             break;
             // Alterar dados pessoais do funcionário
             case 4:
@@ -298,11 +301,13 @@ public class App {
                   System.out.println("Informe o novo nome:");
                   nomeFuncionario = scanner.nextLine().toUpperCase();
                   funcionario.setNome(nomeFuncionario);
+                  System.out.println("Nome alterado com sucesso!");
                 break;
                 case 2:
                   System.out.println("Informe o novo sobrenome:");
                   sobrenomeFuncionario = scanner.nextLine().toUpperCase();
                   funcionario.setSobrenome(sobrenomeFuncionario);
+                  System.out.println("Sobrenome alterado com sucesso!");
                 break;
                 case 3:
                   System.out.println("Digite o nome do novo bairro do funcionário: ");
@@ -315,6 +320,7 @@ public class App {
                   estadoFuncionario = scanner.nextLine();
 
                   funcionario.setEndereco(new Endereco(bairroFuncionario, cidadeFuncionario, estadoFuncionario));
+                  System.out.println("Endereço alterado com sucesso!");
                 break;
                 case 4:
                   String novoCpf = "";
@@ -325,16 +331,22 @@ public class App {
                   }
 
                   funcionario.setCpf(novoCpf);
+
+                  System.out.println("CPF alterado com sucesso!");
                 break;
                 case 5:
                   System.out.println("Informe o nova idade:");
                   idadeFuncionario = Integer.parseInt(scanner.nextLine());
                   funcionario.setIdade(idadeFuncionario);
+
+                  System.out.println("Idade alterada com sucesso!");
                 break;
                 case 6:
                   System.out.println("Informe o novo número de telefone:");
                   telefoneFuncionario = scanner.nextLine().toUpperCase();
                   funcionario.setTelefone(telefoneFuncionario);
+
+                  System.out.println("Telefone alterado com sucesso!");
                 break;
                 default:
                   System.out.println("Opção inválida!");

@@ -1,3 +1,6 @@
+/*
+ * A classe endereço armazenará o endereço completo de uma empresa ou funcionário
+ */
 public class Endereco {
   private Bairro bairro;
   private Cidade cidade;

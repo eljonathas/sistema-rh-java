@@ -1,3 +1,6 @@
+/*
+ * A classe Cargo armazena os dois cargos possíveis dentro da empresa, sendo eles chefe e colaborador
+ */
 public enum Cargo {
     CHEFE("Chefe"), COLABORADOR("Colaborador");
 

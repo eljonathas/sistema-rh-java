@@ -44,7 +44,8 @@ public class App {
     System.out.println("Digite o nome do dono da empresa: ");
     String nomeDono = scanner.nextLine();
 
-    // A partir dos dados recebidos acima, um objeto da classe empresa é instaciado a fim de que se tenha acesso a seus serviços
+    // A partir dos dados recebidos acima, um objeto da classe empresa é instaciado
+    // a fim de que se tenha acesso a seus serviços
     Empresa empresa = new Empresa(
       nomeEmpresa, 
       cnpj, 
@@ -58,7 +59,7 @@ public class App {
     boolean sair = false;
 
     // As ações que podem ser realizadas dentro do sistema de RH, os quais correspondem aos métodos da classe empresa,
-    // con exceção da opção sair.
+    // com exceção da opção sair.
     while (!sair) {
       System.out.println("""
       Digite a opção desejada:
@@ -79,6 +80,7 @@ public class App {
       int opcao = Integer.parseInt(scanner.nextLine());
 
       switch (opcao) {
+        //Admitir funcionário
         // Contratar um funcionário. Logo, é necessário recolher todos os seus dados.
         case 1:
           // O nome do funcionário é recebido
@@ -117,7 +119,8 @@ public class App {
           System.out.println("Digite o estado do funcionário: ");
           String estadoFuncionario = scanner.nextLine();
 
-          // O sexo do funcionário é recebido e feita uma validação para que ele entre somente as duas opções válidas: F e M
+          // O sexo do funcionário é recebido e feita uma validação para que ele entre somente as duas opções válidas:
+          // F e M
           String sexoFuncionario = "";
           
           while ( !(sexoFuncionario.equals("M") || sexoFuncionario.equals("F")) ) {
@@ -216,7 +219,8 @@ public class App {
 
           System.out.println("Contrato ["+uniqueID+": "+funcionario.getNome()+"] criado com sucesso!");
         break;
-        
+
+        // Consultar funcionário por nome ou cpf
         // Um funcionário é buscado para que seus dados sejam visualizados
         case 2:
           System.out.println("Digite o cpf ou nome do funcionário: ");
@@ -275,7 +279,7 @@ public class App {
                 System.out.println("Digite o novo cargo do funcionário, escolha entre ["+Cargo.CHEFE.getCargo()+", "+Cargo.COLABORADOR.getCargo()+"]: ");
                 novoCargo = scanner.nextLine().toLowerCase();
 
-                // Se este funcionário for o novo chefe, o antigo chefe deve ser transformado em um colaborador
+                // Se este contrato for o do novo chefe, o contrato do antigo chefe deve ser modificado
                 if(empresa.listarChefeDoSetor(contratoBuscado.getSetor()) != null && novoCargo.equals(Cargo.CHEFE.getCargo().toLowerCase())) {
                   String nomeDoChefeAnterior = empresa.listarChefeDoSetor(contratoBuscado.getSetor()).getFuncionario().getNome();
     
@@ -302,6 +306,7 @@ public class App {
 
               Setor novoObjetoSetor = null;
 
+              // Dependendo do valor entrado pelo usuário, o novo setor é escolhido
               switch(novoSetor) {
                 case "requisitos":
                   novoObjetoSetor = Setor.REQUISITOS;
@@ -323,6 +328,7 @@ public class App {
                 break;
               }
 
+              // O novo setor é atribuído ao contrato
               contratoBuscado.setSetor(novoObjetoSetor);
               System.out.println("Setor alterado com sucesso!");
             break;
@@ -337,22 +343,28 @@ public class App {
               5 - Alterar idade
               6 - Alterar telefone
               """);
+
+              // O usuário deve informar qual dado específico do funcionário ele deseja alterar
               opcaoAlteracao = Integer.parseInt(scanner.nextLine());
+              // Uma referência para o funcionário do contrato é buscada
               funcionario = contratoBuscado.getFuncionario();
 
               switch(opcaoAlteracao) {
+                // Alterando o nome
                 case 1:
                   System.out.println("Informe o novo nome:");
                   nomeFuncionario = scanner.nextLine().toUpperCase();
                   funcionario.setNome(nomeFuncionario);
                   System.out.println("Nome alterado com sucesso!");
                 break;
+                // Alterando o sobrenome
                 case 2:
                   System.out.println("Informe o novo sobrenome:");
                   sobrenomeFuncionario = scanner.nextLine().toUpperCase();
                   funcionario.setSobrenome(sobrenomeFuncionario);
                   System.out.println("Sobrenome alterado com sucesso!");
                 break;
+                // Alterando o endereço
                 case 3:
                   System.out.println("Digite o nome do novo bairro do funcionário: ");
                   bairroFuncionario = scanner.nextLine();
@@ -366,6 +378,7 @@ public class App {
                   funcionario.setEndereco(new Endereco(bairroFuncionario, cidadeFuncionario, estadoFuncionario));
                   System.out.println("Endereço alterado com sucesso!");
                 break;
+                // Alterando o cpf
                 case 4:
                   String novoCpf = "";
 
@@ -378,6 +391,7 @@ public class App {
 
                   System.out.println("CPF alterado com sucesso!");
                 break;
+                // Alterando a idade
                 case 5:
                   System.out.println("Informe o nova idade:");
                   idadeFuncionario = Integer.parseInt(scanner.nextLine());
@@ -385,6 +399,7 @@ public class App {
 
                   System.out.println("Idade alterada com sucesso!");
                 break;
+                // Alterando o telefone
                 case 6:
                   System.out.println("Informe o novo número de telefone:");
                   telefoneFuncionario = scanner.nextLine().toUpperCase();
@@ -401,12 +416,14 @@ public class App {
         }
         break;
 
-        // Excluir funcionário
+        // Demitir funcionário por cpf
         case 4:
+          // Uma referência do funcionário é buscada por cpf
           System.out.println("Digite o cpf do funcionário que deseja excluir: ");
           cpfFuncionario = scanner.nextLine().toUpperCase();
           Funcionario funcionarioBuscado = empresa.consultarFuncionario(cpfFuncionario);
 
+          // Se o funcionário existe, ele é demitido
           if(funcionarioBuscado != null) {
             empresa.procurarContratoParaDemissão(funcionarioBuscado.getCpf());
             System.out.println("Funcionário excluído com sucesso!");
@@ -416,6 +433,7 @@ public class App {
         break;
 
         // Listar todos os funcionários
+        // Todos os funcionários com seus dados serão impressos
         case 5:
           empresa.mostrarTodosOsFuncionarios();
         break;
@@ -451,6 +469,7 @@ public class App {
         break;
 
         // Imprimir folha de pagamento
+        // A soma dos salários dos funcionários é informada
         case 9:
           System.out.println(empresa.listarFolhaDePagamento());
         break;

@@ -1,3 +1,7 @@
+/*
+ * A classe Setor guarda os setores possíveis que uma empresa pode possuir, sendo eles requisitos, modelagem,
+ * codificação, testes e recursos humanos
+ */
 enum Setor {
     REQUISITOS("Requisitos"),
     MODELAGEM("Modelagem"),

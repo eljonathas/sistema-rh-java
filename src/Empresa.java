@@ -1,4 +1,8 @@
 import java.util.ArrayList;
+/*
+ * A classe empresa encapsula os métodos para importantes de todo o sistema, pois eles representamm os serviços disponíveis
+ * do programa
+ */
 
 public class Empresa {
   private String nome;
@@ -8,7 +12,7 @@ public class Empresa {
   private String email;
   private String dono;
   
-  ArrayList<Contrato> contratos = new ArrayList<Contrato>();
+  ArrayList<Contrato> contratos = new ArrayList<Contrato>(); // Onde estão armazenados todos os contratos das empresas
 
   public Empresa(String nome, String cnpj, Endereco endereco, String telefone, String email, String dono) {
     this.nome = nome;
@@ -19,6 +23,7 @@ public class Empresa {
     this.dono = dono;
   }
 
+  // Contrata um funcionário, ou seja, adiciona-o no ArrayList de contratos
   public void adimitirFuncionario(Contrato contrato){
     for (Contrato c : contratos) {
       if (c.getFuncionario().getNome().equals(contrato.getFuncionario().getNome())) {
@@ -27,8 +32,9 @@ public class Empresa {
     }
 
     contratos.add(contrato);
-  } 
+  }
 
+  // Demite un funcionário, ou seja, elimina-o do ArrayList de contratos
   public void procurarContratoParaDemissão(String cpf) {
     for (Contrato c : contratos) {
       if (c.getFuncionario().getCpf().equals(cpf)) {
@@ -40,6 +46,7 @@ public class Empresa {
     System.out.println("Não foi encontrado nenhum contrato para a demissão do funcionário com CPF: " + cpf);
   }
 
+  // Retorna uma referência para um funcionário específico por meio de seu cpf
   public Funcionario consultarFuncionario(String cpfOuNome){
     for (Contrato c : contratos) {
       if (c.getFuncionario().getCpf().equals(cpfOuNome) || c.getFuncionario().getNome().equals(cpfOuNome)) {
@@ -50,12 +57,14 @@ public class Empresa {
     return null;
   }
 
+  // Todos os funcionários com seus dados são impressos
   public void mostrarTodosOsFuncionarios(){
     for (Contrato c : contratos) {
       System.out.println(c.getFuncionario().toString());
     }
   }
 
+  // Imprime os funcionários que são do setor, sexo e estado informados
   public void mostrarFuncionariosPorSetorSexoEstado(String setorNome, String sexoFuncionario, String estadoFuncionario){
     for (Contrato c : contratos) {
       if (c.getSetor().getNome().equals(setorNome)){
@@ -70,12 +79,14 @@ public class Empresa {
     System.out.println("Nenhum funcionário encontrado");
   }
 
+  // Todos os contratos da empresa são impressos
   public void listarContratos(){
     for (Contrato c : contratos) {
       System.out.println(c.toString());
     }
   }
 
+  // Busca um contrato específico entro dos contratos da empresa por meio de seu Id e o retorna
   public Contrato buscarContratoPorId(String contratoId){
     for (Contrato c : contratos) {
       if (c.getId().equals(contratoId)) {
@@ -86,6 +97,7 @@ public class Empresa {
     return null;
   }
 
+  // Uma referência para o funcionário de maior salário é buscada e retornada
   public Funcionario listarFuncionarioDeMaiorSalario(){
     Funcionario funcionarioMaiorSalario = null;
     double maiorSalario = 0;
@@ -100,6 +112,7 @@ public class Empresa {
     return funcionarioMaiorSalario;
   }
 
+  // Uma referência para o funcionário de menor salário é buscada e retornada
   public Funcionario listarFuncionarioDeMenorSalario(){
     Funcionario funcionarioMenorSalario = null;
     double menorSalario = 0;
@@ -114,6 +127,7 @@ public class Empresa {
     return funcionarioMenorSalario;
   }
 
+  // Todos os contratos são impressos e o valor total dos salários é retornado.
   public String listarFolhaDePagamento(){
     String folhaDePagamento = "";
     double salarioTotal = 0.00;
@@ -126,6 +140,7 @@ public class Empresa {
     return folhaDePagamento+"Total de custos de pagamento dos funcionários: R$ " + salarioTotal;
   }
 
+  // O contrato do chefe do setor informado é retornado
   public Contrato listarChefeDoSetor(Setor setor){
     for (Contrato c : contratos) {
       if (c.getSetor().equals(setor)){

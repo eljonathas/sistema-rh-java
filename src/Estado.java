@@ -1,3 +1,6 @@
+/*
+ * A classe bairro armazena o nome do estado que comporá o endereço
+ */
 public class Estado {
   private String nome;
 

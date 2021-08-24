@@ -1,3 +1,6 @@
+/*
+ * A classe cidade armazena o nome da cidade que comporá o endereço
+ */
 public class Cidade {
   private String nome;
 

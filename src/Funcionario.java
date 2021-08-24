@@ -1,3 +1,7 @@
+/*
+ * A classe funcionário guarda os dados específicos de cada funcionário como seu nome, sobrenome, endereço,
+ * cpf, idade, sexo e telefone
+ */
 public class Funcionario {
   private String nome;
   private String sobrenome;

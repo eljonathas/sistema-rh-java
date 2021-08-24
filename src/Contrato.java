@@ -1,3 +1,7 @@
+/*
+ * A classe Contrato guarda os dados específicos de cada contrato como o funcionário relacionado a ele,
+ * id do contrato, salário do funcionário, seu cargo, e setor
+ */
 public class Contrato {
   private Funcionario funcionario;
   private String id;

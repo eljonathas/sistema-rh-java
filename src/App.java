@@ -2,47 +2,63 @@ import java.util.Scanner;
 import java.util.UUID;
 
 public class App {
+
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
+
+    // Primeiramente, os dados da empresa recebidos para a classe Empresa seja instanciada
+    // O nome da empresa é entrado
     System.out.println("Digite o nome da empresa: ");
     String nomeEmpresa = scanner.nextLine();
 
     String cnpj = "";
 
+    // O cnpj da empresa é entrado. É feita uma validação para que o usuário a quantidade de dígitos correta
     while (cnpj.length() != 14) {
       System.out.println("Digite os 14 números do cnpj: ");
       cnpj = scanner.nextLine();
     }
-    
+
+    // O três inputs seguintes serão utilizados para instanciar a classe endereço, já que ela é composta por um Bairro, Cidade e Estado
+    // A cidade onde a empresa reside é recebida para, posteriormente, ser usada para instanciar a classe Cidade
     System.out.println("Digite o cidade onde a empresa está localizada: ");
     String cidadeEmpresa = scanner.nextLine();
 
+    // O bairro onde a empresa reside é recebico para, posteriormente, ser usada para instanciar a classe Bairro
     System.out.println("Digite o bairro onde a empresa está localizada: ");
     String bairroEmpresa = scanner.nextLine();
 
+    // O estado onde a empresa reside é recebico para, posteriormente, ser usada para instanciar a classe Estado
     System.out.println("Digite o estado onde a empresa está localizada: ");
     String estadoEmpresa = scanner.nextLine();
 
+    // O telefone da empresa é recebido
     System.out.println("Digite o telefone da empresa: ");
     String telefone = scanner.nextLine();
 
+    // O email da empresa é recebido
     System.out.println("Digite o email da empresa: ");
     String email = scanner.nextLine();
 
+    // O nome do dono da empresa é recebido
     System.out.println("Digite o nome do dono da empresa: ");
     String nomeDono = scanner.nextLine();
 
+    // A partir dos dados recebidos acima, um objeto da classe empresa é instaciado a fim de que se tenha acesso a seus serviços
     Empresa empresa = new Empresa(
       nomeEmpresa, 
       cnpj, 
-      new Endereco(bairroEmpresa, cidadeEmpresa, estadoEmpresa), 
+      new Endereco(bairroEmpresa, cidadeEmpresa, estadoEmpresa), // Um objeto da classe endereço é instanciado para completar o construtor da classe empresa
       telefone, 
       email, 
       nomeDono
     );
 
+    // Variável de controle para terminar a execução do programa quando o usuário desejar
     boolean sair = false;
 
+    // As ações que podem ser realizadas dentro do sistema de RH, os quais correspondem aos métodos da classe empresa,
+    // con exceção da opção sair.
     while (!sair) {
       System.out.println("""
       Digite a opção desejada:
@@ -58,21 +74,26 @@ public class App {
       10 - Sair
       """);
 
-      // Caso a opção seja inválida, o programa pede para digitar novamente
+      // O usuário deve escolher uma entre as opções informadas.
+      // Caso a opção seja inválida, ele é perguntado novamente até que entre uma opção válida
       int opcao = Integer.parseInt(scanner.nextLine());
 
       switch (opcao) {
-        // Admitir funcionário
+        // Contratar um funcionário. Logo, é necessário recolher todos os seus dados.
         case 1:
+          // O nome do funcionário é recebido
           System.out.println("Digite o primeiro nome do funcionário: ");
           String nomeFuncionario = scanner.nextLine();
 
+          // O sobrenome do funcionário é recebido
           System.out.println("Digite o sobrenome do funcionário: ");
           String sobrenomeFuncionario = scanner.nextLine();
 
+          // O idade do funcionário é recebido
           System.out.println("Digite a idade do funcionário: ");
           int idadeFuncionario = Integer.parseInt(scanner.nextLine());
 
+          // O cpf do funcionário é recebido e é feita uma validação para que ele não entre um cpf inválido.
           String cpfFuncionario = "";
 
           while (cpfFuncionario.length() != 11) {
@@ -80,18 +101,23 @@ public class App {
             cpfFuncionario = scanner.nextLine();
           }
 
+          // O telefone do funcionário é recebido
           System.out.println("Digite o telefone do funcionário: ");
           String telefoneFuncionario = scanner.nextLine();
 
+          // O cidade do funcionário é recebido
           System.out.println("Digite o cidade do funcionário: ");
           String cidadeFuncionario = scanner.nextLine();
 
+          // O bairro do funcionário é recebido
           System.out.println("Digite o bairro do funcionário: ");
           String bairroFuncionario = scanner.nextLine();
 
+          // O estado do funcionário é recebido
           System.out.println("Digite o estado do funcionário: ");
           String estadoFuncionario = scanner.nextLine();
 
+          // O sexo do funcionário é recebido e feita uma validação para que ele entre somente as duas opções válidas: F e M
           String sexoFuncionario = "";
           
           while ( !(sexoFuncionario.equals("M") || sexoFuncionario.equals("F")) ) {
@@ -107,18 +133,23 @@ public class App {
 
           String cargoFuncionario = null;
 
+          // Contrato no qual o funcinário será alocado
           Contrato contrato = null;
 
+          // Receberá uma das constantes definidas dentro do enum Setor
           Setor setor = null;
 
+          // Esta será a identificação do contrato
           String uniqueID = UUID.randomUUID().toString();
 
-          // Matém o loop enquanto o setor escolhido não for válido
+          // O setor do funcionário é recebido e feita uma validação para que ele entre somente um dos setores
+          // os quais existem na empresa. Sendo assim, o laço é mantido enquanto o setor escolhido não for válido
           do {
             System.out.println("Digite o setor do funcionário, escolha entre ["+Setor.TESTES.getNome()+", "+Setor.REQUISITOS.getNome()+", "+Setor.MODELAGEM.getNome()+", "+Setor.CODIFICACAO.getNome()+", "+Setor.RECURSOS_HUMANOS.getNome()+"]: ");
             setorFuncionario = (scanner.nextLine()).toLowerCase();
           } while (!setorFuncionario.equals(Setor.REQUISITOS.getNome().toLowerCase()) && !setorFuncionario.equals(Setor.MODELAGEM.getNome().toLowerCase()) && !setorFuncionario.equals(Setor.CODIFICACAO.getNome().toLowerCase()) && !setorFuncionario.equals(Setor.TESTES.getNome().toLowerCase()) && !setorFuncionario.equals(Setor.RECURSOS_HUMANOS.getNome().toLowerCase()));
 
+          // Dependendo do texto entrado pelo usuário acima, uma das constantes do enum setor é atribuída à variável setor.
           switch(setorFuncionario) {
             case "requisitos":
               setor = Setor.REQUISITOS;
@@ -137,10 +168,12 @@ public class App {
               break;
           }
 
+          // É verificado se o setor deste funcionário que será criado já possui um chefe
           if(empresa.listarChefeDoSetor(setor) != null) {
             System.out.println("O setor escolhido já possui um chefe. Você pode atribuir o cargo para este funcionário para efetuar a troca.");
           }
 
+          // Se este funcionário for o novo chefe, o cargo do antigo chefe deve ser reatribuído para colaborador, pois cada setor só pode ter um chefe.
           do { 
             System.out.println("Digite o cargo do funcionário, escolha entre ["+Cargo.CHEFE.getCargo()+", "+Cargo.COLABORADOR.getCargo()+"]: ");
             cargoFuncionario = scanner.nextLine().toLowerCase();
@@ -154,10 +187,11 @@ public class App {
             }
           } while (!cargoFuncionario.equals(Cargo.CHEFE.getCargo().toLowerCase()) && !cargoFuncionario.equals(Cargo.COLABORADOR.getCargo().toLowerCase()));   
 
+          // O salário do funcinário é recebido
           System.out.println("Digite o salário do funcionário: ");
           double salarioFuncionario = Double.parseDouble(scanner.nextLine());
 
-          // Cria o funcionário
+          // A partir dos dados recebidos, um objeto da classe funcionário é instanciado
           Funcionario funcionario = new Funcionario(
             nomeFuncionario, 
             sobrenomeFuncionario, 
@@ -168,6 +202,7 @@ public class App {
             telefoneFuncionario
           );
 
+          // O contrato deste funcionário é criado a partir das informações coletadas acima.
           contrato = new Contrato(
             funcionario, 
             uniqueID, 
@@ -176,12 +211,13 @@ public class App {
             setor 
           );
 
+          // Por último, o funcionário é contratado, passando seu contrato para a função competente.
           empresa.adimitirFuncionario(contrato);
 
           System.out.println("Contrato ["+uniqueID+": "+funcionario.getNome()+"] criado com sucesso!");
         break;
         
-        // Consultar funcionário por nome ou cpf
+        // Um funcionário é buscado para que seus dados sejam visualizados
         case 2:
           System.out.println("Digite o cpf ou nome do funcionário: ");
           String cpfOuNomeFuncionarioConsulta = scanner.nextLine();
@@ -201,6 +237,7 @@ public class App {
           System.out.println("Lista de contratos: ");
           empresa.listarContratos();
 
+          // Os contrato é buscado por Id
           System.out.println("Digite o id do contrato desejado com base nos dados acima: ");
           String idContrato = scanner.nextLine();
 
@@ -210,7 +247,7 @@ public class App {
             System.out.println("Contrato não encontrado!");
             break;
           } else {
-          
+          // Deve ser informado qual dado específico do contrato será alterado
           System.out.println("""
           Escolha a opção desejada:
           1 - Alterar salário
@@ -222,21 +259,23 @@ public class App {
           int opcaoAlteracao = Integer.parseInt(scanner.nextLine());
 
           switch(opcaoAlteracao) {
-            // Alterar salário
+            // Alterando o salário
             case 1:
               System.out.println("Digite o novo salário: ");
               double novoSalario = Double.parseDouble(scanner.nextLine());
               contratoBuscado.setSalario(novoSalario);
               System.out.println("Salário alterado com sucesso!");
             break;
-            // Alterar cago
+            // Alterando o cargo
             case 2:
               String novoCargo = null;
 
+              // Deve ser feita a validação para que o usuário informe um cargo válido.
               do { 
                 System.out.println("Digite o novo cargo do funcionário, escolha entre ["+Cargo.CHEFE.getCargo()+", "+Cargo.COLABORADOR.getCargo()+"]: ");
                 novoCargo = scanner.nextLine().toLowerCase();
-    
+
+                // Se este funcionário for o novo chefe, o antigo chefe deve ser transformado em um colaborador
                 if(empresa.listarChefeDoSetor(contratoBuscado.getSetor()) != null && novoCargo.equals(Cargo.CHEFE.getCargo().toLowerCase())) {
                   String nomeDoChefeAnterior = empresa.listarChefeDoSetor(contratoBuscado.getSetor()).getFuncionario().getNome();
     
@@ -250,11 +289,16 @@ public class App {
               
               System.out.println("Cargo alterado com sucesso!");
             break;
-            // Alterar setor
+            // Alterando o setor
             case 3:
-            
-              System.out.println("Digite o novo setor ["+Setor.TESTES.getNome()+", "+Setor.REQUISITOS.getNome()+", "+Setor.MODELAGEM.getNome()+", "+Setor.CODIFICACAO.getNome()+", "+Setor.RECURSOS_HUMANOS.getNome()+"]: ");
-              String novoSetor = scanner.nextLine().toLowerCase();
+
+              String novoSetor = null;
+              // System.out.println("Digite o novo setor ["+Setor.TESTES.getNome()+", "+Setor.REQUISITOS.getNome()+", "+Setor.MODELAGEM.getNome()+", "+Setor.CODIFICACAO.getNome()+", "+Setor.RECURSOS_HUMANOS.getNome()+"]: ");
+              // String novoSetor = scanner.nextLine().toLowerCase();
+              do {
+                System.out.println("Digite o novo setor do funcionário, escolha entre ["+Setor.TESTES.getNome()+", "+Setor.REQUISITOS.getNome()+", "+Setor.MODELAGEM.getNome()+", "+Setor.CODIFICACAO.getNome()+", "+Setor.RECURSOS_HUMANOS.getNome()+"]: ");
+                novoSetor = (scanner.nextLine()).toLowerCase();
+              } while (!novoSetor.equals(Setor.REQUISITOS.getNome().toLowerCase()) && !novoSetor.equals(Setor.MODELAGEM.getNome().toLowerCase()) && !novoSetor.equals(Setor.CODIFICACAO.getNome().toLowerCase()) && !novoSetor.equals(Setor.TESTES.getNome().toLowerCase()) && !novoSetor.equals(Setor.RECURSOS_HUMANOS.getNome().toLowerCase()));
 
               Setor novoObjetoSetor = null;
 
